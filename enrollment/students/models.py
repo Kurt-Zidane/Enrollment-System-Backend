@@ -10,20 +10,29 @@ class Student(models.Model):
         MALE = 'Male',
         FEMALE = 'Female',
 
-    first_name = models.CharField(max_length=40)
-    last_name = models.CharField(max_length=40)
-    age = models.IntegerField()
-    date_joined = models.DateTimeField(default=now, editable=False)
-    gender = models.CharField(max_length=20, choices=Genders.choices)
-    address = models.CharField(max_length=250)
+    first_name = models.CharField(null=True, max_length=40)
+    last_name = models.CharField(null=True, max_length=40)
+    date_joined = models.DateTimeField(null=True, default=now, editable=False)
+    gender = models.CharField(null=True, max_length=20, choices=Genders.choices)
+    address = models.CharField(null=True, max_length=250)
+    suffix = models.CharField(null=True, max_length=40)
+    birthdate = models.DateField(null=True, blank=True)
+    
+    STUDENT_CHOICES = (
+        ('Undergraduate', 'Undergraduate'),
 
-    form137_done = models.BooleanField()
-    PSA_done = models.BooleanField()
-    TwoByTwo_done = models.BooleanField()
-    GoodMorale_done = models.BooleanField()
+    )
 
-    subjects = models.ManyToManyField(
-        'subjects.Subject', through='subjects.SubjectStudent')
+    studentType = models.CharField(max_length=15, null='Choose', choices=STUDENT_CHOICES)
+
+
+    form137_done = models.BooleanField(null=True)
+    PSA_done = models.BooleanField(null=True)
+    TwoByTwo_done = models.BooleanField(null=True)
+    GoodMorale_done = models.BooleanField(null=True)
+
+    ##subjects = models.ManyToManyField(
+    ##    'subjects.Subject', through='subjects.SubjectStudent', null=True)
 
     def __str__(self):
         return self.first_name
