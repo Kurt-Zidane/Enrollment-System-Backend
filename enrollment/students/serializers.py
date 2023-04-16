@@ -12,7 +12,7 @@ class StudentSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Student
-        fields = ('id', 'first_name', 'last_name', 'age', 'gender', 'address',
+        fields = ('id', 'first_name', 'last_name', 'gender', 'address',
                   'date_joined', 'birthdate', 'suffix', 'studentType', 
-                  'form137_done', 'PSA_done', 'TwoByTwo_done', 'GoodMorale_done')
+                  'form137_done', 'mi', 'PSA_done', 'TwoByTwo_done', 'GoodMorale_done')
         read_only_fields = ('id', 'date_joined')

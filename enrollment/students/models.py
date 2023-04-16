@@ -12,6 +12,7 @@ class Student(models.Model):
 
     first_name = models.CharField(null=True, max_length=40)
     last_name = models.CharField(null=True, max_length=40)
+    mi = models.CharField(null=True, max_length=5)
     date_joined = models.DateTimeField(null=True, default=now, editable=False)
     gender = models.CharField(null=True, max_length=20, choices=Genders.choices)
     address = models.CharField(null=True, max_length=250)
