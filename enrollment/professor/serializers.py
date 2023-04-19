@@ -14,4 +14,4 @@ class ProfessorSerializer(serializers.HyperlinkedModelSerializer):
         model = Professor
         fields = ('id', 'first_name',
                   'last_name', 'age', 'gender', 'date_joined', 'subjects')
-        read_only_fields = ('id', 'date_joined', 'subjects')
+        read_only_fields = ('id', 'date_joined', 'subjects','full_name')

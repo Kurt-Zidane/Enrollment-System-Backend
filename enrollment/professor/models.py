@@ -16,10 +16,12 @@ class Professor(models.Model):
     gender = models.CharField(max_length=20, choices=Genders.choices)
     subjects = models.ManyToManyField(
         'subjects.Subject', through='subjects.SubjectProfessor')
+    full_name = models.CharField(max_length=80, blank= True,editable=False)
+
+    def save(self, *args, **kwargs):
+        self.full_name = f"{self.first_name} {self.last_name}"
+        super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.first_name
+        return self.full_name
 
-    @property
-    def full_name(self):
-        return self.first_name + " " + self.last_name

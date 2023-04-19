@@ -13,8 +13,9 @@ class Subject(models.Model):
         'professor.Professor', related_name='SubjectProfessor_professor_assigned', through='subjects.SubjectProfessor')
     students = models.ManyToManyField(
         'students.Student', related_name='SubjectProfessor_student_assigned', through='subjects.SubjectStudent')
+    
     def __str__(self):
-        return self.subject_name
+        return f"{self.subject_name}"
     
 class SubjectProfessor(models.Model):
     subject = models.ForeignKey('subjects.Subject', on_delete=models.CASCADE)

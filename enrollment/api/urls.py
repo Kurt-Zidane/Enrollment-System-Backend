@@ -7,4 +7,5 @@ urlpatterns = [
     path('',include('professor.urls')),
     path('',include('profiles.urls')),
     path('',include('students.urls')),
+    path('',include('schedules.urls')),
 ]
