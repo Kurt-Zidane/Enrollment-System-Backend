@@ -29,10 +29,12 @@ class Schedule(models.Model):
     schedule_days = models.CharField(
         null=True, max_length=20, choices=Schedule_days.choices)
     time = models.CharField(max_length=20, null=True, choices=time_slots)
+    subject = models.ForeignKey('subjects.Subject', on_delete=models.CASCADE, related_name='schedules', null=True)
 
     def __str__(self):
-        return f"{self.schedule_days + ' ' + self.time}"
+        return f"{self.schedule_days + ' ' + self.time} - {self.subject if self.subject else 'No subject'}"
 
     @property
     def full_name(self):
         return f"{self.schedule_days + ' ' + self.time}"
+    
