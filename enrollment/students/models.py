@@ -10,14 +10,14 @@ class Student(models.Model):
         MALE = 'Male',
         FEMALE = 'Female',
 
-    first_name = models.CharField(null=True, max_length=40)
-    last_name = models.CharField(null=True, max_length=40)
-    mi = models.CharField(null=True, max_length=5)
+    first_name = models.CharField(max_length=40)
+    last_name = models.CharField(max_length=40)
+    mi = models.CharField(max_length=5)
     date_joined = models.DateTimeField(null=True, default=now, editable=False)
-    gender = models.CharField(null=True, max_length=20, choices=Genders.choices)
-    address = models.CharField(null=True, max_length=250)
-    suffix = models.CharField(null=True, max_length=40)
-    birthdate = models.DateField(null=True, blank=True)
+    gender = models.CharField(max_length=20, choices=Genders.choices)
+    address = models.CharField(max_length=250)
+    suffix = models.CharField(blank=True, max_length=40)
+    birthdate = models.DateField(blank=True)
     
     STUDENT_CHOICES = (
         ('Undergraduate', 'Undergraduate'),
@@ -36,7 +36,7 @@ class Student(models.Model):
     ##    'subjects.Subject', through='subjects.SubjectStudent', null=True)
 
     def __str__(self):
-        return self.first_name
+        return self.first_name + " " + self.last_name
 
     @property
     def full_name(self):
