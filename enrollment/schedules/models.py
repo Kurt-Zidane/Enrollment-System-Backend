@@ -31,6 +31,7 @@ class Schedule(models.Model):
     time = models.CharField(max_length=20, null=True, choices=time_slots)
     subject = models.ForeignKey('subjects.Subject', on_delete=models.CASCADE, related_name='schedules', null=True)
     professor = models.ForeignKey('professor.Professor', on_delete=models.CASCADE, related_name='schedules', null=True)
+    student = models.ManyToManyField('students.Student', related_name='schedules', blank=True, through='schedules.ScheduleStudent')
     def __str__(self):
         return f"{self.schedule_days + ' ' + self.time} - {self.subject if self.subject else 'No subject'}"
 
@@ -38,3 +39,8 @@ class Schedule(models.Model):
     def full_name(self):
         return f"{self.schedule_days + ' ' + self.time}"
     
+class ScheduleStudent(models.Model):
+    schedule = models.ForeignKey('schedules.Schedule', on_delete=models.CASCADE)
+    students = models.ForeignKey(
+        'students.Student', on_delete=models.CASCADE, null=True)
+    date_joined = models.DateTimeField(default=now, editable=False)

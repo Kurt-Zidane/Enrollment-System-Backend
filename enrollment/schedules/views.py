@@ -1,9 +1,11 @@
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets, generics
-from .serializers import ScheduleSerializer, SubjectSerializer, ProfessorSerializer
+from .serializers import ScheduleSerializer, SubjectSerializer, ProfessorSerializer, StudentSerializer
 from .models import Schedule
 from subjects.models import Subject
 from professor.models import Professor
+from students.models import Student
+
 
 class ScheduleViewSet(viewsets.ModelViewSet):
     # permission_classes = [IsAuthenticated]
@@ -17,5 +19,9 @@ class SubjectViewSet(generics.RetrieveAPIView):
     serializer_class = SubjectSerializer
 
 class ProfessorViewSet(generics.RetrieveAPIView):
-    queryset = Subject.objects.all()
+    queryset = Professor.objects.all()
     serializer_class = ProfessorSerializer
+
+class StudentViewSet(generics.RetrieveAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer

@@ -34,10 +34,11 @@ class Student(models.Model):
 
     ##subjects = models.ManyToManyField(
     ##    'subjects.Subject', through='subjects.SubjectStudent', null=True)
+    full_name = models.CharField(max_length=80, blank= True,editable=False)
+
+    def save(self, *args, **kwargs):
+        self.full_name = f"{self.first_name} {self.last_name}"
+        super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.first_name
-
-    @property
-    def full_name(self):
-        return self.first_name
+        return self.full_name
