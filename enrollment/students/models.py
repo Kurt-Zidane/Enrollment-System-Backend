@@ -36,8 +36,8 @@ class Student(models.Model):
     ##    'subjects.Subject', through='subjects.SubjectStudent', null=True)
 
     def __str__(self):
-        return self.first_name + " " + self.last_name
+        return self.first_name
 
     @property
     def full_name(self):
-        return self.first_name + " " + self.last_name
+        return self.first_name
