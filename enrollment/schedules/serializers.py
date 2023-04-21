@@ -15,6 +15,7 @@ class ScheduleSerializer(serializers.ModelSerializer):
     student = serializers.PrimaryKeyRelatedField(many=True,
         queryset=Student.objects.all())
     course_id = serializers.ReadOnlyField(source='subject.course_id')
+    subject_units = serializers.ReadOnlyField(source='subject.subject_units')
     
     def update(self, instance, validated_data):
         student_data = validated_data.pop('student', None)
@@ -27,13 +28,14 @@ class ScheduleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Schedule
         fields = ('id', 'schedule_days', 'time',
-                  'date_added', 'subject', 'professor', 'student','course_id')
+                  'date_added', 'subject', 'professor', 'student','course_id','subject_units')
         read_only_fields = ('id', 'date_added',)
 
 
 class SubjectSerializer(serializers.ModelSerializer):
     schedules = ScheduleSerializer(many=True, read_only=True)
     course_id = serializers.ReadOnlyField(source='subject.course_id')
+    subject_units = serializers.ReadOnlyField(source='subject.subject_units')
     class Meta:
         model = Subject
         fields = '__all__'

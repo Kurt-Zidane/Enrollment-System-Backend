@@ -7,6 +7,7 @@ class Subject(models.Model):
     subject_name = models.CharField(max_length=40)
     description = models.CharField(max_length=200)
     course_id = models.CharField(max_length=20)
+    subject_units = models.CharField(max_length=2)
     date_added = models.DateTimeField(default=now, editable=False)
     date_updated = models.DateTimeField(auto_now_add=False, auto_now=True)
     professors = models.ManyToManyField(

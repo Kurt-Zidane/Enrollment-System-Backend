@@ -16,7 +16,7 @@ class SubjectSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Subject
         fields = ('id', 'subject_name',
-                  'description', 'course_id', 'date_added', 'professors', 'students')
+                  'description', 'course_id', 'date_added', 'professors', 'students', 'subject_units',)
         read_only_fields = ('id', 'date_added',
                             'professors', 'students')
 
