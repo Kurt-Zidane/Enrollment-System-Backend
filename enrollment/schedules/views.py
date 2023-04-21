@@ -47,3 +47,11 @@ class ProfessorViewSet(generics.RetrieveAPIView):
 class StudentViewSet(generics.RetrieveAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
+
+
+class StudentScheduleViewSet(generics.ListAPIView):
+    serializer_class = ScheduleSerializer
+
+    def get_queryset(self):
+        student_id = self.kwargs['student_id']
+        return Schedule.objects.filter(student__id=student_id)
