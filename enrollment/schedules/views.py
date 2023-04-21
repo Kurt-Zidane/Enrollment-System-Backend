@@ -13,10 +13,23 @@ class ScheduleViewSet(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ScheduleSerializer
     queryset = Schedule.objects.all().order_by('date_added')
 
-    def destroy(self, request, *args, **kwargs):
+    def partial_update(self, request, *args, **kwargs):
         instance = self.get_object()
-        self.perform_destroy(instance)
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        serializer = self.get_serializer(
+            instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+    
+    def delete(self, request, *args, **kwargs):
+        instance = self.get_object()
+        student_id = request.data.get('student_id', None)
+        if student_id:
+            instance.student.remove(student_id)
+            instance.save()
+            return Response({'message': 'Student removed from schedule'}, status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response({'message': 'student_id is required'}, status=status.HTTP_400_BAD_REQUEST)
 
 class SchedulesViewSet(generics.ListCreateAPIView):
     # permission_classes = [IsAuthenticated]

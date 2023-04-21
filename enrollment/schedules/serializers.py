@@ -8,12 +8,20 @@ from students.models import Student
 class ScheduleSerializer(serializers.ModelSerializer):
     date_added = serializers.DateTimeField(
         format="%d-%m-%Y %I:%M%p", read_only=True)
-    subject = serializers.PrimaryKeyRelatedField(
-        queryset=Subject.objects.all())
-    professor = serializers.PrimaryKeyRelatedField(
-        queryset=Professor.objects.all())
-    student = serializers.SlugRelatedField(
-        queryset=Student.objects.all(), many=True, slug_field='full_name', allow_null=True)
+    subject = serializers.SlugRelatedField(
+        queryset=Subject.objects.all(), slug_field='subject_name', allow_null=True)
+    professor = serializers.SlugRelatedField(
+        queryset=Professor.objects.all(), slug_field='full_name', allow_null=True)
+    student = serializers.PrimaryKeyRelatedField(many=True,
+        queryset=Student.objects.all())
+    
+    def update(self, instance, validated_data):
+        student_data = validated_data.pop('student', None)
+        instance = super().update(instance, validated_data)
+        if student_data is not None:
+            for student in student_data:
+                instance.student.add(student)
+        return instance
 
     class Meta:
         model = Schedule
