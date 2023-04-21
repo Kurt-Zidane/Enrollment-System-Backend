@@ -8,7 +8,7 @@ from subjects.models import Subject
 from professor.models import Professor
 from students.models import Student
 
-class ScheduleViewSet(generics.RetrieveUpdateDestroyAPIView):
+class ScheduleViewSet(generics.RetrieveUpdateAPIView):
     # permission_classes = [IsAuthenticated]
     serializer_class = ScheduleSerializer
     queryset = Schedule.objects.all().order_by('date_added')
