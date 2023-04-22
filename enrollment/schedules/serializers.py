@@ -28,7 +28,7 @@ class ScheduleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Schedule
         fields = ('id', 'schedule_days', 'time',
-                  'date_added', 'subject', 'professor', 'student','course_id','subject_units')
+                  'date_added', 'subject', 'professor', 'student','course_id','subject_units', 'semester')
         read_only_fields = ('id', 'date_added',)
 
 

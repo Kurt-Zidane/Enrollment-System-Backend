@@ -6,6 +6,10 @@ from django import forms
 
 class Schedule(models.Model):
 
+    class Semester(models.TextChoices):
+        FIRST_SEMESTER = '1st sem'
+        SECOND_SEMESTER = '2nd sem'
+
     class Schedule_days(models.TextChoices):
         Monday = 'Monday',
         Tuesday = 'Tuesday',
@@ -29,18 +33,26 @@ class Schedule(models.Model):
     schedule_days = models.CharField(
         null=True, max_length=20, choices=Schedule_days.choices)
     time = models.CharField(max_length=20, null=True, choices=time_slots)
-    subject = models.ForeignKey('subjects.Subject', on_delete=models.CASCADE, related_name='schedules', null=True)
-    professor = models.ForeignKey('professor.Professor', on_delete=models.CASCADE, related_name='schedules', null=True)
-    student = models.ManyToManyField('students.Student', related_name='schedules', blank=True, through='schedules.ScheduleStudent')
+    semester = models.CharField(
+        max_length=10, choices=Semester.choices, default=Semester.FIRST_SEMESTER)
+    subject = models.ForeignKey(
+        'subjects.Subject', on_delete=models.CASCADE, related_name='schedules', null=True)
+    professor = models.ForeignKey(
+        'professor.Professor', on_delete=models.CASCADE, related_name='schedules', null=True)
+    student = models.ManyToManyField(
+        'students.Student', related_name='schedules', blank=True, through='schedules.ScheduleStudent')
+
     def __str__(self):
-        return f"{self.schedule_days + ' ' + self.time} - {self.subject if self.subject else 'No subject'}"
+        return f"{self.schedule_days + ' ' + self.time} - {self.subject if self.subject else 'No subject'} ({self.semester})"
 
     @property
     def full_name(self):
-        return f"{self.schedule_days + ' ' + self.time}"
-    
+        return f"{self.schedule_days + ' ' + self.time} ({self.semester})"
+
+
 class ScheduleStudent(models.Model):
-    schedule = models.ForeignKey('schedules.Schedule', on_delete=models.CASCADE)
+    schedule = models.ForeignKey(
+        'schedules.Schedule', on_delete=models.CASCADE)
     students = models.ForeignKey(
         'students.Student', on_delete=models.CASCADE, null=True)
     date_joined = models.DateTimeField(default=now, editable=False)
