@@ -9,6 +9,8 @@ class Student(models.Model):
     class Genders(models.TextChoices):
         MALE = 'Male',
         FEMALE = 'Female',
+        OTHER = 'Other',
+    
 
     first_name = models.CharField(max_length=40)
     last_name = models.CharField(max_length=40)
