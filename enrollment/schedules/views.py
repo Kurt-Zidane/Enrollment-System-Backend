@@ -55,3 +55,10 @@ class StudentScheduleViewSet(generics.ListAPIView):
     def get_queryset(self):
         student_id = self.kwargs['student_id']
         return Schedule.objects.filter(student__id=student_id)
+    
+class ScheduleEnrollmentListView(generics.ListAPIView):
+    serializer_class = StudentSerializer
+
+    def get_queryset(self):
+        schedule_id = self.kwargs.get('schedule_id')
+        return Schedule.objects.get(id=schedule_id).student.all()

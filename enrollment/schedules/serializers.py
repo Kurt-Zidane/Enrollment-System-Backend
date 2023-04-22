@@ -50,8 +50,8 @@ class ProfessorSerializer(serializers.ModelSerializer):
 
 
 class StudentSerializer(serializers.ModelSerializer):
-    schedules = ScheduleSerializer(many=True, read_only=True)
 
     class Meta:
         model = Student
         fields = '__all__'
+

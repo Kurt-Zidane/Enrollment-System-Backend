@@ -11,4 +11,5 @@ urlpatterns = [
     path('schedules/<int:pk>/', views.ScheduleViewSet.as_view()),
     path('schedules/', views.SchedulesViewSet.as_view()),
     path('schedules/student/<int:student_id>/', views.StudentScheduleViewSet.as_view()),
+    path('schedules/<int:schedule_id>/enrollments/',views.ScheduleEnrollmentListView.as_view()),
 ]
